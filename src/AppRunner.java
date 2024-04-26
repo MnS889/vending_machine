@@ -1,11 +1,13 @@
 import enums.ActionLetter;
 import model.*;
+import util.CardReceiver;
 import util.UniversalArray;
 import util.UniversalArrayImpl;
 
 import java.util.Scanner;
 
 public class AppRunner {
+    CardReceiver cardReceiver = new CardReceiver();
 
     private final UniversalArray<Product> products = new UniversalArrayImpl<>();
 
@@ -60,9 +62,19 @@ public class AppRunner {
         print(" h - Выйти");
         String action = fromConsole().substring(0, 1);
         if ("a".equalsIgnoreCase(action)) {
-            coinAcceptor.setAmount(coinAcceptor.getAmount() + 10);
-            print("Вы пополнили баланс на 10");
-            return;
+            String answer = fromConsole();
+            try {
+                
+                if (answer.equals("картой") || answer.equals("Картой")){
+                    cardReceiver.displayOptions();
+                    int sum = Integer.parseInt(fromConsole());
+
+                    cardReceiver.acceptPayment(sum);
+
+                }
+            }catch (NumberFormatException e){
+                System.out.println("Не правильный ввод. Введите цифру");
+            }
         }
         try {
             for (int i = 0; i < products.size(); i++) {
