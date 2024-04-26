@@ -85,7 +85,11 @@ public class AppRunner {
         try {
             for (int i = 0; i < products.size(); i++) {
                 if (products.get(i).getActionLetter().equals(ActionLetter.valueOf(action.toUpperCase()))) {
-                    coinAcceptor.setAmount(coinAcceptor.getAmount() - products.get(i).getPrice());
+                    if (cardReceiver.getBalance() > 20){
+                        cardReceiver.setBalance(cardReceiver.getBalance() - products.get(i).getPrice());
+                    }else if (coinReceiver.getBalance() > 20){
+                        cardReceiver.setBalance(cardReceiver.getBalance() - products.get(i).getPrice());
+                    }
                     print("Вы купили " + products.get(i).getName());
                     break;
                 }
