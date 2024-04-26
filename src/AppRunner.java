@@ -1,6 +1,7 @@
 import enums.ActionLetter;
 import model.*;
 import util.CardReceiver;
+import util.CoinReceiver;
 import util.UniversalArray;
 import util.UniversalArrayImpl;
 
@@ -8,6 +9,7 @@ import java.util.Scanner;
 
 public class AppRunner {
     CardReceiver cardReceiver = new CardReceiver();
+    CoinReceiver coinReceiver = new CoinReceiver();
 
     private final UniversalArray<Product> products = new UniversalArrayImpl<>();
 
@@ -64,13 +66,17 @@ public class AppRunner {
         if ("a".equalsIgnoreCase(action)) {
             String answer = fromConsole();
             try {
-                
+
                 if (answer.equals("картой") || answer.equals("Картой")){
                     cardReceiver.displayOptions();
                     int sum = Integer.parseInt(fromConsole());
 
                     cardReceiver.acceptPayment(sum);
 
+                }else if (answer.equals("монеты") || answer.equals("Монеты")){
+                    coinReceiver.displayOptions();
+                    int sum = Integer.parseInt(fromConsole());
+                    coinReceiver.acceptPayment(sum);
                 }
             }catch (NumberFormatException e){
                 System.out.println("Не правильный ввод. Введите цифру");
