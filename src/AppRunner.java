@@ -13,7 +13,7 @@ public class AppRunner {
 
     private final UniversalArray<Product> products = new UniversalArrayImpl<>();
 
-    private final CoinAcceptor coinAcceptor;
+
 
     private static boolean isExit = false;
 
@@ -26,7 +26,7 @@ public class AppRunner {
                 new Mars(ActionLetter.F, 80),
                 new Pistachios(ActionLetter.G, 130)
         });
-        coinAcceptor = new CoinAcceptor(100);
+
     }
 
     public static void run() {
@@ -40,7 +40,8 @@ public class AppRunner {
         print("В автомате доступны:");
         showProducts(products);
 
-        print("Монет на сумму: " + coinAcceptor.getAmount());
+        print("Монет на сумму: " + cardReceiver.getBalance());
+        print("Монет на сумму: " + coinReceiver.getBalance());
 
         UniversalArray<Product> allowProducts = new UniversalArrayImpl<>();
         allowProducts.addAll(getAllowedProducts().toArray());
@@ -51,7 +52,7 @@ public class AppRunner {
     private UniversalArray<Product> getAllowedProducts() {
         UniversalArray<Product> allowProducts = new UniversalArrayImpl<>();
         for (int i = 0; i < products.size(); i++) {
-            if (coinAcceptor.getAmount() >= products.get(i).getPrice()) {
+            if (cardReceiver.getBalance() >= products.get(i).getPrice() || coinReceiver.getBalance() >= products.get(i).getPrice()) {
                 allowProducts.add(products.get(i));
             }
         }
